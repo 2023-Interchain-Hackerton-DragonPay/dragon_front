@@ -10,6 +10,7 @@ import ProfilePage from "pages/ProfilePage";
 import MakeQRPage from "pages/MakeQRPage";
 import ScanQRPage from "pages/ScanQRPage";
 import Header from "components/global/Header";
+import CompletePage from "pages/CompletePage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/profile" element={Auth(<ProfilePage />)} />
           <Route path="/makeqr/:id" element={Auth(<MakeQRPage />)} />
           <Route path="/scanqr" element={Auth(<ScanQRPage />)} />
+          <Route path="/complete" element={Auth(<CompletePage />)} />
           <Route path="/test" element={<TestPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

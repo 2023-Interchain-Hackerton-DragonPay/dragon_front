@@ -16,8 +16,10 @@ export function ModalProvider({ children }) {
     const [modal, setModal] = useState(false);
     const [typeData, setTypeData] = useState(ModalType.Basic);
     const [paramsData, setParamsData] = useState({});
+    const [data, setData] = useState("");
 
-    const openModal = ({ type, params }) => {
+    const openModal = ({ type, params, data }) => {
+        setData(data);
         setTypeData(type);
         setParamsData(params);
         setModal(true);
@@ -37,6 +39,7 @@ export function ModalProvider({ children }) {
                 closeModal,
                 typeData,
                 paramsData,
+                data
             }}>
             <RootModal />
             {children}
@@ -45,16 +48,17 @@ export function ModalProvider({ children }) {
 }
 
 export function useModal() {
-    const { isModalOpen, openModal, closeModal, typeData, paramsData } =
+    const { isModalOpen, openModal, closeModal, typeData, paramsData, data } =
         useContext(ModalContext);
     return {
         isModalOpen,
-        openModal: ({ type = ModalType.Basic, params = {} }) => {
-            console.log(type, params);
-            openModal({ type, params });
+        openModal: ({ type = ModalType.Basic, params = {}, data = "" }) => {
+            console.log(type, params, data);
+            openModal({ type, params, data });
         },
         closeModal,
         type: typeData,
         params: paramsData,
+        data
     };
 }

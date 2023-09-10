@@ -20,11 +20,57 @@ function ScanQRPage() {
   const { openModal, closeModal } = useModal();
   const [isLoading, setIsLoading] = useState(false);
 
+  // const sendBalance = async () => {
+  //   if (window.keplr) {
+  //     const key = await window.keplr.getKey("osmo-test-5");
+  //     const protoMsgs = {
+  //       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+  //       value: MsgSend.encode({
+  //         fromAddress: key.bech32Address,
+  //         toAddress: recipient,
+  //         amount: [
+  //           {
+  //             denom: "uosmo",
+  //             amount: DecUtils.getTenExponentN(6).mul(new Dec(amount)).truncate().toString(),
+  //           },
+  //         ],
+  //       }).finish(),
+  //     }
+
+  //     try {
+  //       const gasUsed = await simulateMsgs(
+  //         OsmosisChainInfo,
+  //         key.bech32Address,
+  //         [protoMsgs],
+  //         [{denom: "uosmo",
+  //           amount: "236",}]
+  //         );
+
+  //       if(gasUsed) {
+  //         await sendMsgs(
+  //           window.keplr,
+  //           OsmosisChainInfo,
+  //           key.bech32Address,
+  //           [protoMsgs],
+  //           {
+  //             amount: [{denom: "uosmo",
+  //               amount: "236",}],
+  //             gas: Math.floor(gasUsed * 1.5).toString(),
+  //           })
+  //       }
+  //     } catch (e) {
+  //       if (e instanceof Error) {
+  //         console.log(e.message);
+  //       }
+  //     }
+
+  //   }
+  // }
+
   const qrScanHandler = () => {
     const cameraView = document.getElementById("qr-camera");
     const qrScanner = new QrScanner(cameraView, (result) => {
       if (isScanning) return;
-      console.log(result);
 
       isScanning = true;
       setIsLoading(true);
@@ -32,14 +78,12 @@ function ScanQRPage() {
         type: ModalType.Loading,
         params: {
           title: "QR Code",
-          content: result,
+          data: result,
         },
       });
 
       setTimeout(() => {
-        isScanning = false;
-        setIsLoading(false);
-        closeModal();
+        window.location.href = "/complete";
       }, 5000);
     });
 
